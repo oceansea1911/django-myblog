@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %} {{ blog.caption }} {% endblock %}
+
+{% block content1 %}
+	<div class='main_body'>
+		<div class='blog_title'>
+			{{ blog.caption }}
+		</div>
+		<div class='blog_info'>
+			<span class='li1'>分类：<a href="#">{{ blog.classification }}</a></span>
+			<span class='li2'>作者：<a href="#">{{ blog.author }}</a></span>
+			<span class='li1'>发表时间：{{ blog.publish_time|date:'Y-m-d H-m' }}</span>
+			<p></p>
+			<p></p>
+			<span class='li1'>{{ blog.content }}</span>
+		</div>
+		<p></p>
+		<p></p>
+		
+	</div>
+
+{% endblock %}
+{% block content2 %}
+	<div class='comment'>
+		<p><h3>评论</h3></p>
+		<div class='comment_list'>
+			{% for comment in comments%}
+				<p>
+				<div>
+					{% for element1, element2 in comment %}
+						<div>
+						{% if element1 != ''%}
+							<span>{{element1.ip}} 回复 {{element2.ip}} |{{element1.comment_time}} 说:{{element1.content}}</span><a class="reply" href="#comment_reply" onclick='MakeForm()'>回复</a>
+						</div>
+							{% if forloop.last %}
+								<span>{{element2.ip}} |{{element1.comment_time}} 说:{{element2.content}}</span><a class="reply" href="#comment_reply" onclick='MakeForm()'>回复</a>
+							{% endif %}
+						{% endif%}
+						{% if element1 == ''%}
+							{% if forloop.last %}
+								<span>{{element2.ip}} |{{element2.comment_time}} 说:{{element2.content}}</span><a class="reply" href="#comment_reply" onclick='MakeForm()'>回复</a>
+							{% endif %}
+						{% endif%}
+
+					{% endfor %}
+				</div>
+			{% empty %}
+				<h4>没有评论</h4>
+				</p>
+				<p></p>
+				<p></p>
+			{% endfor %}
+		</div>
+
+	</div>
+{% endblock %}
